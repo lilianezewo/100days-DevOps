@@ -1,0 +1,4 @@
+#!/bin/bash
+# Example post-commit hook: log commit info
+
+echo "Commit made on $(date)" >> .git/commit-log.txt

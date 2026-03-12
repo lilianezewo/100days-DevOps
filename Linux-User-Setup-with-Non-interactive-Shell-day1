@@ -1,0 +1,19 @@
+     Question
+ Create a user with non-interactive shell for your organization on a specific server. This is essential for service accounts and automated processes that don't require interactive login capabilities.
+      Solution
+First, login into the app server using SSH:
+
+ssh user@app-server-ip or ssh user@server-name
+It will ask for user password, enter the correct password.
+
+After login into server, run the following command to create user with non-interactive shell
+
+sudo useradd -m -s /usr/sbin/nologin user-name
+s: for shell, here we are giving nologin shell
+
+m: for user home directory, It will create a directory with user-name under /home
+
+Verify the result
+
+cat /etc/passwd
+It should give you a list of users where you will find your created user. It will look like this: kareem:x:1003:1004::/home/kareem:/usr/sbin/nologin

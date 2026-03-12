@@ -1,0 +1,12 @@
+       Question
+ As part of the temporary assignment to the Nautilus project, a developer named yousuf requires access for a limited duration. To ensure smooth access management, a temporary user account with an expiry date is needed. Here's what you need to do:
+
+Create a user named yousuf on App Server 1 in Stratos Datacenter. Set the expiry date to 2024-01-28, ensuring the user is created in lowercase as per standard protocol.
+
+          Solution
+   1- login into App server 1
+   ssh user@host or ip
+   2- create the user with expiry date
+   sudo useradd -e expirydate username
+   3-verify your result
+   sudo chage -l username

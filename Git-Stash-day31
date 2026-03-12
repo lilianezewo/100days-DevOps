@@ -1,0 +1,47 @@
+    Question
+The Nautilus application development team was working on a git repository /usr/src/kodekloudrepos/blog present on Storage server in Stratos DC. One of the developers stashed some in-progress changes in this repository, but now they want to restore some of the stashed changes. Find below more details to accomplish this task:
+
+
+
+Look for the stashed changes under /usr/src/kodekloudrepos/blog git repository, and restore the stash with stash@{1} identifier. Further, commit and push your changes to the origin.
+
+
+
+
+     answer
+thor@jumphost ~$ ssh natasha@ststor01
+The authenticity of host 'ststor01 (10.244.234.243)' can't be established.
+ED25519 key fingerprint is SHA256:yEyN8qvzhNxfcKVE+H05zwQPmQMKCXj4JyGWuOP1HIg.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ststor01' (ED25519) to the list of known hosts.
+natasha@ststor01's password: 
+[natasha@ststor01 ~]$ cd /usr/src/kodekloudrepos/blog
+[natasha@ststor01 blog]$ sudo git stash list
+stash@{0}: WIP on master: a921974 initial commit
+stash@{1}: WIP on master: a921974 initial commit
+[natasha@ststor01 blog]$ sudo git apply stash@{1}
+error: can't open patch 'stash@{1}': No such file or directory
+[natasha@ststor01 blog]$ sudo git stash apply stash@{1}
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   welcome.txt
+
+[natasha@ststor01 blog]$ sudo git add .
+[natasha@ststor01 blog]$ sudo git commit -m "Restored changes from stash@{1}"
+[master fa5d76e] Restored changes from stash@{1}
+ 1 file changed, 1 insertion(+)
+ create mode 100644 welcome.txt
+[natasha@ststor01 blog]$ sudo git push origin master
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 319 bytes | 319.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To /opt/blog.git
+   a921974..fa5d76e  master -> master
+[natasha@ststor01 blog]$ 

@@ -1,0 +1,27 @@
+      Question
+ The Nautilus application development team recently finished the beta version of one of their Java-based applications, which they are planning to deploy on one of the app servers in Stratos DC. After an internal team meeting, they have decided to use the tomcat application server. Based on the requirements mentioned below complete the task:
+
+ 1-Install tomcat server on App Server 1.
+ 2-Configure it to run on port 8086.
+ 3-There is a ROOT.war file on Jump host at location /tmp.
+ 4-Deploy it on this tomcat server and make sure the webpage works directly on base URL i.e curl http://stapp01:8086
+
+       Solution
+
+  1- Login into app server and install tomcat
+     ssh tony@stapp01
+     sudo yum update -y
+     sudo yum install tomcat -y
+  2- configure
+     sudo vi /etc/tomcat/server.xml
+      . just look for the port and change it to port 8086
+  3-copy the ROOT.war file
+     sudo cp /tmp/ROOT.war /usr/share/tomcat/webapps/
+   -Enable and check the status
+    sudo systemctl enable --now tomcat
+    sudo systemctl status tomcat
+  4- Deploy and make it run
+    sudo netstat -tulpen | grep 8089
+    - verify
+    curl http://stapp:8089
+

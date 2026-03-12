@@ -1,0 +1,14 @@
+     Question
+   In a bid to automate backup processes, the xFusionCorp Industries sysadmin team has developed a new bash script named xfusioncorp.sh. While the script has been distributed to all necessary servers, it lacks executable permissions on App Server 1 within the Stratos Datacenter.
+
+Your task is to grant executable permissions to the /tmp/xfusioncorp.sh script on App Server 1. Additionally, ensure that all users have the capability to execute it.
+
+    SOlution
+ 1- Login into app server1
+    ssh user@host
+ 2-Check the current file permission status:
+   ls -la /tmp
+ 3- Run the following command to update permissions:
+   sudo chmod 755 /tmp/xfusioncorp.sh
+ 4- Verify the results:
+   ls -la /tmp

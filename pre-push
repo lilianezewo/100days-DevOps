@@ -1,0 +1,18 @@
+cat > pre-push << 'EOF'
+#!/bin/bash
+# Pre-push hook to tag master with today's date
+
+TODAY=$(date +%F)
+TAG="release-$TODAY"
+
+# Only tag if pushing master
+while read local_ref local_sha remote_ref remote_sha
+do
+    if [[ "$remote_ref" == "refs/heads/master" ]]; then
+        if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+            git tag "$TAG" master
+            git push origin "$TAG"
+        fi
+    fi
+done
+EOF

@@ -1,0 +1,41 @@
+      question
+The Nautilus application development team has been working on a project repository /opt/cluster.git. This repo is cloned at /usr/src/kodekloudrepos on storage server in Stratos DC. They recently shared the following requirements with DevOps team:
+One of the developers is working on feature branch and their work is still in progress, however there are some changes which have been pushed into the master branch, the developer now wants to rebase the feature branch with the master branch without loosing any data from the feature branch, also they don't want to add any merge commit by simply merging the master branch into the feature branch. Accomplish this task as per requirements mentioned.
+
+
+Also remember to push your changes once done.
+
+       solution
+thor@jumphost ~$ ssh natasha@ststor01
+The authenticity of host 'ststor01 (10.244.164.57)' can't be established.
+ED25519 key fingerprint is SHA256:yEyN8qvzhNxfcKVE+H05zwQPmQMKCXj4JyGWuOP1HIg.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ststor01' (ED25519) to the list of known hosts.
+natasha@ststor01's password: 
+[natasha@ststor01 ~]$ cd /usr/src/kodekloudrepos/cluster
+[natasha@ststor01 cluster]$ sudo git branch
+* feature
+  master
+[natasha@ststor01 cluster]$ git fetch origin
+fatal: detected dubious ownership in repository at '/usr/src/kodekloudrepos/cluster'
+To add an exception for this directory, call:
+
+        git config --global --add safe.directory /usr/src/kodekloudrepos/cluster
+[natasha@ststor01 cluster]$ sudo git fetch origin
+[natasha@ststor01 cluster]$ sudo git rebase origin/master
+Successfully rebased and updated refs/heads/feature.
+[natasha@ststor01 cluster]$ sudo git log --oneline --graph --decorate
+* c1c0765 (HEAD -> feature) Add new feature
+* fe6c46a (origin/master, origin/HEAD, master) Update info.txt
+* e86d95a initial commit
+[natasha@ststor01 cluster]$ sudo git push origin feature --force
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 296 bytes | 296.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To /opt/cluster.git
+ + 13f4288...c1c0765 feature -> feature (forced update)
+[natasha@ststor01 cluster]$ 

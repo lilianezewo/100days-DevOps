@@ -1,0 +1,7 @@
+#!/bin/bash
+# Example pre-commit hook: block commits with TODOs
+
+if git diff --cached | grep -q "TODO"; then
+  echo "Commit blocked: remove TODOs before committing."
+  exit 1
+fi

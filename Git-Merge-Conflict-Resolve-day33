@@ -1,0 +1,45 @@
+      Question
+  Sarah and Max were working on writting some stories which they have pushed to the repository. Max has recently added some new changes and is trying to push them to the repository but he is facing some issues. Below you can find more details:
+
+SSH into storage server using user max and password Max_pass123. Under /home/max you will find the story-blog repository. Try to push the changes to the origin repo and fix the issues. The story-index.txt must have titles for all 4 stories. Additionally, there is a typo in The Lion and the Mooose line where Mooose should be Mouse.
+
+Click on the Gitea UI button on the top bar. You should be able to access the Gitea page. You can login to Gitea server from UI using username sarah and password Sarah_pass123 or username max and password Max_pass123.
+
+Note: For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.
+
+        Solution
+
+ 1- Login into the storage server using user max
+    ssh max@ststor01
+   pass_word of max: Max_pass123
+ 2- Login into the repository
+  cd /home/max/story-blog
+ 3- check the conflict status
+   git status
+     You’ll see  listed as conflicted.
+ 4-Open the conflicted file
+   vi story-index.txt
+      	Inside, you’ll see conflict markers
+        - Resolve the conflict
+        - Make sure all 4 story titles are present.
+        - Fix the typo: change “The Lion and the Mooose” → “The Lion and the Mouse”.
+        - Remove the conflict markers (<<<<<<<, =======, >>>>>>>).
+        - Save the file.
+ 5- Mark conflict as resolved
+   git add story-index.txt
+ 6- Commit the merge
+   git commit -m "adding file and changing typo"
+ 7- Push to origin
+   git push origin master
+✅ Verification in Gitea
+- Open the Gitea UI (top bar).
+- Log in as sarah (Sarah_pass123) or max (Max_pass123).
+- Navigate to the story-blog repository.
+- Confirm that story-index.txt now lists all 4 titles correctly, with the typo fixed.
+
+📌 Reminder for your task submission:
+Take screenshots of:
+- The conflict resolution in story-index.txt (showing the corrected titles).
+- The successful git push.
+- The updated file in Gitea UI.
+

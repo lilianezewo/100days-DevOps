@@ -1,0 +1,11 @@
+#!/bin/bash
+REPO_PATH="/opt/news.git"
+cd "$REPO_PATH" || exit 1
+
+TODAY=$(date +%F)
+TAG="release-$TODAY"
+
+if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+    git tag "$TAG" master
+    git push origin "$TAG"
+fi
