@@ -5,3 +5,35 @@ Install docker-ce and docker compose packages on App Server 2.
 Initiate the docker service.
 
      Solution
+   1- Login into app server 2
+      ssh user@host
+   # Remove old versions
+sudo yum remove -y docker docker-client docker-common docker-engine
+
+# Install prerequisites
+sudo yum install -y yum-utils
+
+# Add Docker repo
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+# Install Docker CE
+sudo yum install -y docker-ce docker-ce-cli containerd.io
+
+# Start and enable service
+sudo systemctl start docker
+sudo systemctl enable docker
+
+# Install Docker Compose
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" \
+  -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose --version
+   2- Initiate
+ # Start the Docker service
+sudo systemctl start docker
+
+# Enable Docker to start on boot
+sudo systemctl enable docker
+
+# Check the status to confirm it's running
+sudo systemctl status docker
