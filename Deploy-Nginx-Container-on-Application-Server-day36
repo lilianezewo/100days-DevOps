@@ -1,0 +1,43 @@
+  Question
+    The Nautilus DevOps team is conducting application deployment tests on selected application servers. They require a nginx container deployment on Application Server 2. Complete the task with the following instructions:
+On Application Server 2 create a container named nginx_2 using the nginx image with the alpine tag. Ensure container is in a running state.
+
+
+   Solution
+  thor@jump-host ~$ ssh steve@stapp02
+The authenticity of host 'stapp02 (10.244.13.16)' can't be established.
+ED25519 key fingerprint is SHA256:4b+hTxU0ZFud/izjW/ApE4F8+smlFXySsWnrIf18/dQ.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'stapp02' (ED25519) to the list of known hosts.
+steve@stapp02's password: 
+[steve@stapp02 ~]$ sudo docker pull nginx:alpine
+
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+[sudo] password for steve: 
+alpine: Pulling from library/nginx
+589002ba0eae: Pull complete 
+d2a46166eee6: Pull complete 
+593488f95c35: Pull complete 
+e19aff8f2cce: Pull complete 
+1549d7aec962: Pull complete 
+1f25242adbdb: Pull complete 
+c32126d2b96c: Pull complete 
+c24026275c33: Pull complete 
+Digest: sha256:f46cb72c7df02710e693e863a983ac42f6a9579058a59a35f1ae36c9958e4ce0
+Status: Downloaded newer image for nginx:alpine
+docker.io/library/nginx:alpine
+[steve@stapp02 ~]$ docker run -d --name nginx_2 nginx:alpine
+
+48f8fe7b6acb1b87e76bc15f3980cdde123cd829a3aded35b3ac6958e37f77d0
+[steve@stapp02 ~]$ docker ps -f name=nginx_2
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS     NAMES
+48f8fe7b6acb   nginx:alpine   "/docker-entrypoint.…"   52 seconds ago   Up 50 seconds   80/tcp    nginx_2
+[steve@stapp02 ~]$ 
