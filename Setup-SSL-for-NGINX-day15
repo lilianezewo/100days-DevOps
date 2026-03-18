@@ -1,0 +1,33 @@
+     Question
+  The system admins team of xFusionCorp Industries needs to deploy a new application on App Server 3 in Stratos Datacenter. They have some pre-requites to get ready that server for application deployment. Prepare the server as per requirements shared below:
+
+1-Install and configure nginx on App Server 3.
+
+2-On App Server 3 there is a self signed SSL certificate and key present at location /tmp/nautilus.crt and /tmp/nautilus.key. Move them to some appropriate location and deploy the same in Nginx.
+
+3-Create an index.html file with content Welcome! under Nginx document root.
+
+4-For final testing try to access the App Server 3 link (either hostname or IP) from jump host using curl command. For example curl -Ik https://<app-server-ip>
+
+    Solution
+
+ 1-Login into app server 3
+     ssh banner@stapp03
+  -Install nginx
+     sudo yum install nginx -y
+  - Enable and start service
+    sudo systemctl enable nginx
+    sudo systemctl start nginx
+ 2-Move SSL Certificate and Key
+    sudo mkdir -p /etc/nginx/ssl
+    sudo mv /tmp/nautilus.crt /etc/nginx/ssl
+    sudo mv /nautilus.key /etc/nginx/ssl
+    sudo chmod 600 /etc/nginx/ssl/nautilus.key
+  -configure nginx for SSL
+    sudo vi /etc/nginx/conf.d/default.conf
+  -Test and reload Nginx
+    sudo nginx -t
+    sudo systemctl reload nginx
+ 3-Create an index.html file
+    echo "Welcome!" | sudo tee /usr/share/nginx/html/index.html
+ 4- Do the final testing

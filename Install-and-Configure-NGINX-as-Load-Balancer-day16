@@ -1,0 +1,28 @@
+     Question
+  Day by day traffic is increasing on one of the websites managed by the Nautilus production support team. Therefore, the team has observed a degradation in website performance. Following discussions about this issue, the team has decided to deploy this application on a high availability stack i.e on Nautilus infra in Stratos DC. They started the migration last month and it is almost done, as only the LBR server configuration is pending. Configure LBR server as per the information given below:
+
+1-Install nginx on LBR server
+2-Configure load-balancing with the an http context making use of all App Servers. Ensure that you update only the main Nginx configuration file located at /etc/nginx/nginx.conf
+3-Make sure you do not update the apache port that is already defined in the apache configuration on all app servers, also make sure apache server is up and running on all app servers
+4-Once done, you can access the website using StaticApp button on the top bar
+
+      Solution
+   1- Login into the LBR server
+    - Install nginx into the server
+       sudo yum install nginx -y
+    - Enable and start nginx
+       sudo systemctl enable nginx
+       sudo systemctl start nginx
+   2- Login into each app server and do as follow
+       sudo ss -tlnup
+       sudo vi /etc/nginx/nginx.conf
+   . Replace the default http block with a load-balancing configuration. 
+   . Assuming your App Server are named app1, app2 and app3 
+   . Replace the port with the port on which httpd service is running.
+   3- Valide nginx configuration
+       sudo nginx -t
+   . If syntax is OK, reload nginx
+       sudo systemctl reload nginx
+   . If syntax is not OK check nginx status and resolve the issue
+       sudo systemctl status nginx
+

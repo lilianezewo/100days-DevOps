@@ -1,0 +1,30 @@
+    Question
+ Our monitoring tool has reported an issue in Stratos Datacenter. One of our app servers has an issue, as its Apache service is not reachable on port 3000 (which is the Apache port). The service itself could be down, the firewall could be at fault, or something else could be causing the issue.
+
+Use tools like telnet, netstat, etc. to find and fix the issue. Also make sure Apache is reachable from the jump host without compromising any security settings.
+
+Once fixed, you can test the same using command curl http://stapp01:3000 command from jump host.
+
+     Solution
+
+ 1- Login into app server
+   ssh user@host -y
+ 2- Confirm Apache is Listening on port 3000
+   sudo netstat -tulnp | grep 3000
+     . If you see that it is not mark on port 3000, stop the port on which it is mark e.g sendmail
+   sudo systemctl stop sendmail
+     . then start httpd
+   sudo systemctl start httpd
+     . Disable and enable sendmail ( the port use)
+   sudo systemctl disable sendmail
+   sudo systemctl enable sendmail
+ 3- check firewall rules
+   sudo iptables -Ln-n | grep 3000
+ 4- command breakdown
+   sudo iptables -I INPUT 1 -p tcp --dport 3000 -j ACCEPT
+     .I INPUT 1 -insert a new rule at the top of the INPUT chain
+     .-p tcp   - Applies to TCP protocol traffic
+     .--dport 3000 - matches packets destined for 3000
+     .j ACCEPT   -Action: accept the traffic (allow it through)
+   - test the jumphost
+     curl http://stapp01:3000
