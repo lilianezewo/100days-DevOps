@@ -1,0 +1,21 @@
+  Question
+  Nautilus developers are actively working on one of the project repositories, /usr/src/kodekloudrepos/media. Recently, they decided to implement some new features in the application, and they want to maintain those new changes in a separate branch. Below are the requirements that have been shared with the DevOps team:
+
+ 1-On Storage server in Stratos DC create a new branch xfusioncorp_media from master branch in /usr/src/kodekloudrepos/media git repo.
+
+ 2-Please do not try to make any changes in the code.
+
+
+      Solution
+  1-Login into the storage server
+     ssh natasha@ststor01
+   -Login into the repository
+      cd  /usr/src/kodekloudrepos/media
+   -Check the branch
+     git branch
+      NOTE: If it is not on the master branch make sure to switch to it using
+     git switch master
+   - create a new branch and switch to it
+     git checkout -b xfusioncorp_media 
+
+

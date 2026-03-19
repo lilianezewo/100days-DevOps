@@ -1,0 +1,24 @@
+      Question
+  The Nautilus application development team has been working on a project repository /opt/demo.git. This repo is cloned at /usr/src/kodekloudrepos on storage server in Stratos DC. They recently shared the following requirements with DevOps team:
+
+Create a new branch nautilus in /usr/src/kodekloudrepos/demo repo from master and copy the /tmp/index.html file (present on storage server itself) into the repo. Further, add/commit this file in the new branch and merge back that branch into master branch. Finally, push the changes to the origin for both of the branches.
+
+    Solution
+    - Login into storage server
+    - Navigate to thr clone repo
+       cd  /usr/src/kodekloudrepos/demo
+    - Ensure you're on master
+       sudo git branch
+    - Create and switch to new branch
+       sudo git switch -b nautilus
+    -Copy the file into the repo
+       sudo cp /tmp/index.html
+    - Stage and commit the file
+       sudo git add .
+       sudo git commit -m "adding index.html"
+    - Merge the new branch back into master
+       sudo git switch master
+       sudo git merge nautilus
+    - push both branch to origin
+       sudo git push origin master
+       sudo git push origin nautilus
