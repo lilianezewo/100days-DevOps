@@ -6,7 +6,9 @@
 
      Solution
 
- 1-Login into the repository
+ 1-Login into the storage server
+    ssh natasha@ststor01
+  -Login into the repository
     cd /usr/src/kodekloudrepos
  2-Clone the repository
      git clone /opt/games.git
