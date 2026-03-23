@@ -1,0 +1,37 @@
+     Question
+   As per recent requirements shared by the Nautilus application development team, they need custom images created for one of their projects. Several of the initial testing requirements are already been shared with DevOps team. Therefore, create a docker file /opt/docker/Dockerfile (please keep D capital of Dockerfile) on App server 2 in Stratos DC and configure to build an image with the following requirements:
+a. 	Use ubuntu:24.04 as the base image.
+b. 	Install apache2 and configure it to work on 5002 port. (do not update any other Apache configuration settings like document root etc).
+
+   Solution
+
+ a. Login into App server 2
+     ssh steve@stapp02
+    -Create the directory
+     sudo mkdir -p /opt/docker
+     cd /opt/docker
+    -sudo vi Dockerfile
+       Paste the following content
+FROM ubuntu:24.04
+
+RUN apt-get update && \
+    apt-get install -y apache2 && \
+    apt-get clean
+
+RUN sed -i 's/Listen 80/Listen 5002/' /etc/apache2/ports.conf && \
+    sed -i 's/:80/:5002/' /etc/apache2/sites-available/000-default.conf
+
+EXPOSE 5002
+
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+    save and exit
+ 
+ b. verify the file
+      ls -l /opt/docker/Dockerfile
+      cat /opt/docker/Dockerfile
+  - Build the image
+      docker build -t nautlius-apache:5002 /opt/docker
+  - Run and test
+      docker run -d --name apache5002 -p 5002:5002 nautlius-apache:5002
+      curl http://localhost:5002
+
