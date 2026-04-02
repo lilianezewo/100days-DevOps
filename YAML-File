@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webserver:   # service name can be anything
+    image: httpd:latest
+    container_name: httpd
+    ports:
+      - "8085:80"   # host:container
+    volumes:
+      - /opt/security:/usr/local/apache2/htdocs
+    restart: always
