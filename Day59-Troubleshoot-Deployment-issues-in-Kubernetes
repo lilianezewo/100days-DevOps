@@ -1,0 +1,47 @@
+       Question
+
+   Last week, the Nautilus DevOps team deployed a redis app on Kubernetes cluster, which was working fine so far. This morning one of the team members was making some changes in this existing setup, but he made some mistakes and the app went down. We need to fix this as soon as possible. Please take a look.
+The deployment name is redis-deployment. The pods are not in running state right now, so please look into the issue and fix the same.
+Note: The kubectl utility on the jump-host has been configured to work with the Kubernetes cluster.
+
+   solution
+1- Login into the deployment
+    vi redis-deployment.yaml
+   Paste the following
+    apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.2
+        ports:
+        - containerPort: 6379
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  selector:
+    app: redis
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+2-Apply a known‑good manifest
+   kubectl apply -f redis-deployment.yaml
+3-Verify pods and service
+  kubectl get pods -l app=redis
+  kubectl get svc redis-service
+  kubectl logs <pod-name>
