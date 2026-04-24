@@ -54,4 +54,4 @@ spec:
   2-apply the deployment
      kubectl apply -f grafana.yaml
   3-Verify pod is running
-     kubectl get pod
+     kubectl get pod                                                                                                                                                                          
