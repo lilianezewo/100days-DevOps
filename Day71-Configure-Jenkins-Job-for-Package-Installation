@@ -1,0 +1,60 @@
+       Question
+Some new requirements have come up to install and configure some packages on the Nautilus infrastructure under Stratos Datacenter. The Nautilus DevOps team installed and configured a new Jenkins server so they wanted to create a Jenkins job to automate this task. Find below more details and complete the task accordingly:
+1. Access the Jenkins UI by clicking on the Jenkins button in the top bar. Log in using the credentials: username admin and password Adm!n321.
+2. Create a new Jenkins job named install-packages and configure it with the following specifications:
+-Add a string parameter named PACKAGE.
+-Configure the job to install a package specified in the $PACKAGE parameter on the storage server (Stratos Datacenter).
+-Build the job at least once (e.g. with parameter PACKAGE=vim-enhanced) so the package is installed on the Storage server and can be verified.
+Note:
+1. Ensure to install any required plugins and restart the Jenkins service if necessary. Opt for Restart Jenkins when installation is complete and no jobs are running on the plugin installation/update page. Refresh the UI page if needed after restarting the service.
+2. Verify that the Jenkins job runs successfully on repeated executions to ensure reliability.
+3. Capture screenshots of your configuration for documentation and review purposes. Alternatively, use screen recording software like loom.com for comprehensive documentation and sharing.
+
+         Solution
+1-Login into the storage server
+   ssh natasha@ststor01
+2-. Access Jenkins
+Click the Jenkins button in the top bar.
+ Log in with:
+ Username: admin
+ Password: Adm!n321
+3-Let's install the following plugins
+ SSH
+ SSH Credentials
+ SSH Build Agent
+4-Go to Manage Jenkins > Credentials > System > Global credentials and Add credentials
+  For kind > Username with password
+  For scope > Global(Jenkins, nodes,items,all child items, etc)
+  leave the rest empty
+5-Go to Manage Jenkins > System and Add SSH sites under SSH remote Posts
+  hostname > ststor01
+  Port > 22
+  Credentials > add natasha
+  leave the rest empty
+  Then apply and save
+6-Create a freestyle job install-packages with following configs
+  *Add Parameter "PACKAGE"
+   -Dashboard > install-packages > configuration
+ .From the Jenkins dashboard, click New Item.
+ .Enter the job name: install-packages.
+ .Select Freestyle project → click OK.
+7-Configure Parameters
+ In the job configuration:
+ .Scroll to Build Parameters.
+ .Add a String Parameter:
+ .Name: PACKAGE
+ .Default Value: leave blank (or set vim-enhanced for testing).
+ .Description: Package name to install on storage server.
+8-Configure Build Step
+ Under Build → Add build step → Execute shell on remote host using ssh, add:
+ Under SSH site > user@serverhost-ip
+ under command > echo 'Bl@KW' | sudo yum install -y $PACKAGE
+ Apply and save
+9-To execute: Dashboard >install-packages > Build with parameters
+   Enter:
+PACKAGE=vim-enhanced
+Run the build.
+10-Verify Installation
+ SSH into the storage server:
+   rpm -q vim-enhanced
+
