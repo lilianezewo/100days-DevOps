@@ -1,0 +1,90 @@
+       Question
+The Nautilus DevOps team has installed and configured new Jenkins server in Stratos DC which they will use for CI/CD and for some automation tasks. There is a requirement to add all app servers as slave nodes in Jenkins so that they can perform tasks on these servers using Jenkins. Find below more details and accomplish the task accordingly.
+
+Click on the Jenkins button on the top bar to access the Jenkins UI. Login using username admin and password Adm!n321.
+
+Add all app servers as SSH build agent/slave nodes in Jenkins. Slave node name for app server 1, app server 2 and app server 3 must be App_server_1, App_server_2, App_server_3 respectively.
+
+Add labels as below:
+
+App_server_1 : stapp01
+App_server_2 : stapp02
+App_server_3 : stapp03
+Remote root directory for
+
+App_server_1 must be /home/tony/jenkins,
+App_server_2 must be /home/steve/jenkins and
+App_server_3 must be /home/banner/jenkins.
+Make sure slave nodes are online and working properly.
+
+Note:
+
+You might need to install some plugins and restart Jenkins service. So, we recommend clicking on Restart Jenkins when installation is complete and no jobs are running on plugin installation/update page i.e update centre. Also, Jenkins UI sometimes gets stuck when Jenkins service restarts in the back end. In this case, please make sure to refresh the UI page.
+
+For these kind of scenarios requiring changes to be done in a web UI, please take screenshots so that you can share it with us for review in case your task is marked incomplete. You may also consider using a screen recording software such as loom.com to record and share your work.
+
+      Solution
+ 1-On each app server install java 17
+    sudo yum install java-17-openjdk -y
+ 2-Step 1: Update Jenkins Plugins
+ Log in to Jenkins UI (admin / Adm!n321).
+ Navigate to Manage Jenkins → Plugins → Available.
+ Search for and install:
+ SSH Build Agents (sometimes listed as “SSH Slaves”).
+ After installation, click Restart Jenkins when installation is complete and no jobs are running.
+ Refresh the UI if it appears stuck.
+ 3-Step 2: Add Credentials for App Servers
+ Go to Manage Jenkins → Credentials → System → Global credentials (unrestricted).
+  Add credentials for each app server:
+  App Server 1
+   Username: tony
+   Password: (server password)
+   ID: stapp01-creds
+  App Server 2
+   Username: steve
+   Password: (server password)
+   ID: stapp02-creds
+  App Server 3
+   Username: banner
+   Password: (server password)
+   ID: stapp03-creds
+ (If SSH keys are preferred, upload the private key instead of password.)
+ 4-Step 3: Configure Agent Nodes
+ For each app server:
+  Navigate to Manage Jenkins → Nodes → New Node.
+ Enter node name:
+   App_server_1
+   App_server_2
+   App_server_3
+ Select Permanent Agent.
+  Configure:
+ Description: (optional)
+  Labels:
+   App_server_1 → stapp01
+   App_server_2 → stapp02
+   App_server_3 → stapp03
+ Remote root directory:
+   App_server_1 → /home/tony/jenkins
+   App_server_2 → /home/steve/jenkins
+   App_server_3 → /home/banner/jenkins
+ Launch method: Launch agent via SSH
+ Host: IP or hostname of the app server
+ Credentials: Select the ones you added earlier
+  Save.
+ 5-Verify Agents Are Online
+ Go to Manage Jenkins → Nodes.
+Each agent should show Connected and Online.
+If offline:
+Check SSH connectivity (ssh user@host).
+Ensure Java is installed and accessible.
+Verify remote root directory exists.
+ 6-Create Test Job
+ Go to New Item → Freestyle Project.
+  Name: testNode.
+ Under General → Restrict where this project can be run, enter one of the labels (stapp01, stapp02, or stapp03).
+  Add Build Step → Execute Shell:
+   echo "Hello from Agent"
+   pwd
+   echo $USER
+ Save and build.
+  Confirm job runs successfully on the chosen agent.
