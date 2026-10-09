@@ -55,4 +55,4 @@ Add a build step → Execute shell:
 4-Create Pipeline Job
 In Jenkins UI:
 New Item → Pipeline → Name: deploy-job
- copy-paste contents from this jenkins file
+ copy-paste contents from this jenkins-multistage-pipeline.jenkinsfile
