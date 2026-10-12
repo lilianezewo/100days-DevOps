@@ -18,7 +18,7 @@ Note: Validation will run the playbook using the command ansible-playbook -i inv
 Delete the content and paste the following
  stapp02 ansible_host=stapp02 ansible_user=steve ansible_ssh_password=Am3ric@ ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
-2-Create a playbook.yml file and copy-paste contents from this playbook file
+2-Create a playbook.yml file and copy-paste contents from this playbook file "files/ansible-simple-playbook-83.yaml"
 - Run the playbook command:
 
 ansible-playbook -i inventory playbook.yml
