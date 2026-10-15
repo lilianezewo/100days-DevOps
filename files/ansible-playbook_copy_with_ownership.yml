@@ -1,0 +1,12 @@
+---
+- name: Create /opt/code.txt on all app servers
+  hosts: app_servers
+  become: yes
+  tasks:
+    - name: Create blank file /opt/code.txt
+      file:
+        path: /opt/code.txt
+        state: touch
+        mode: '0777'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
